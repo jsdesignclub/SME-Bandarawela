@@ -62,12 +62,12 @@ const Dashboard = ({ onEdit, userRole }) => {
 
   const filtered = enterprises.filter(item => {
     const matchesSearch = 
-      (item.BusinessDetails?.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      (item.PersonalDetails?.nic?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      (item.PersonalDetails?.fullName?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      (item.BusinessDetails?.gsDivision?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      (item.BusinessDetails?.businessType?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      (item.BusinessDetails?.regNo?.toLowerCase() || '').includes(searchTerm.toLowerCase());
+      String(item.BusinessDetails?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(item.PersonalDetails?.nic || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(item.PersonalDetails?.fullName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(item.BusinessDetails?.gsDivision || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(item.BusinessDetails?.businessType || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(item.BusinessDetails?.regNo || '').toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesType = typeFilter === 'All' || item.BusinessDetails?.businessType === typeFilter;
     const matchesGS = gsFilter === 'All' || item.BusinessDetails?.gsDivision === gsFilter;
