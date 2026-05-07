@@ -15,6 +15,18 @@ import {
   ClipboardCheck
 } from 'lucide-react';
 
+const GS_DIVISIONS = [
+  "Bandarawela", "Diyatalawa", "Bindunuwewa", "Kebillawela", "Heeloya", 
+  "Ettampitiya", "Ambadanda", "Kandegedara", "Wewathenna", "Kirioruwa", 
+  "Pattiyagedara", "Diganathenna", "Malastha", "Makulella", "Udapone", "Other"
+];
+
+const BUSINESS_TYPES = [
+  "Manufacturing", "Services", "Tourism", "Agriculture", "Information Technology", 
+  "Retail / Trade", "Food & Beverage", "Apparel & Garment", "Livestock", 
+  "Handicraft", "Construction", "Education", "Other"
+];
+
 const EditForm = ({ enterprise, onCancel, onSuccess }) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -104,7 +116,20 @@ const EditForm = ({ enterprise, onCancel, onSuccess }) => {
               <motion.div key="step2" initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -20, opacity: 0 }} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2 md:col-span-2"><label className="text-xs font-bold text-slate-500 uppercase ml-1">Business Name</label><input className="input-field" value={formData.BusinessDetails?.name} onChange={(e) => setFormData({...formData, BusinessDetails: {...formData.BusinessDetails, name: e.target.value}})} /></div>
-                  <div className="space-y-2"><label className="text-xs font-bold text-slate-500 uppercase ml-1">GS Division</label><input className="input-field" value={formData.BusinessDetails?.gsDivision} onChange={(e) => setFormData({...formData, BusinessDetails: {...formData.BusinessDetails, gsDivision: e.target.value}})} /></div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500 uppercase ml-1">GS Division</label>
+                    <select 
+                      className="input-field cursor-pointer" 
+                      value={formData.BusinessDetails?.gsDivision} 
+                      onChange={(e) => setFormData({...formData, BusinessDetails: {...formData.BusinessDetails, gsDivision: e.target.value}})}
+                    >
+                      <option value="">Select GS Division</option>
+                      {GS_DIVISIONS.map(gs => <option key={gs} value={gs}>{gs}</option>)}
+                      {!GS_DIVISIONS.includes(formData.BusinessDetails?.gsDivision) && formData.BusinessDetails?.gsDivision && (
+                        <option value={formData.BusinessDetails.gsDivision}>{formData.BusinessDetails.gsDivision} (Original)</option>
+                      )}
+                    </select>
+                  </div>
                   <div className="space-y-2"><label className="text-xs font-bold text-slate-500 uppercase ml-1">Registration No.</label><input className="input-field" value={formData.BusinessDetails?.regNo} onChange={(e) => setFormData({...formData, BusinessDetails: {...formData.BusinessDetails, regNo: e.target.value}})} /></div>
                   <div className="space-y-2 md:col-span-2"><label className="text-xs font-bold text-slate-500 uppercase ml-1">Business Address</label><textarea className="input-field min-h-[100px] py-3" value={formData.BusinessDetails?.address} onChange={(e) => setFormData({...formData, BusinessDetails: {...formData.BusinessDetails, address: e.target.value}})} /></div>
                 </div>
@@ -114,7 +139,20 @@ const EditForm = ({ enterprise, onCancel, onSuccess }) => {
             {step === 3 && (
               <motion.div key="step3" initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -20, opacity: 0 }} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2"><label className="text-xs font-bold text-slate-500 uppercase ml-1">Business Type</label><input className="input-field" value={formData.BusinessDetails?.businessType} onChange={(e) => setFormData({...formData, BusinessDetails: {...formData.BusinessDetails, businessType: e.target.value}})} /></div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500 uppercase ml-1">Business Type</label>
+                    <select 
+                      className="input-field cursor-pointer" 
+                      value={formData.BusinessDetails?.businessType} 
+                      onChange={(e) => setFormData({...formData, BusinessDetails: {...formData.BusinessDetails, businessType: e.target.value}})}
+                    >
+                      <option value="">Select Business Type</option>
+                      {BUSINESS_TYPES.map(type => <option key={type} value={type}>{type}</option>)}
+                      {!BUSINESS_TYPES.includes(formData.BusinessDetails?.businessType) && formData.BusinessDetails?.businessType && (
+                        <option value={formData.BusinessDetails.businessType}>{formData.BusinessDetails.businessType} (Original)</option>
+                      )}
+                    </select>
+                  </div>
                   <div className="space-y-2"><label className="text-xs font-bold text-slate-500 uppercase ml-1">No. of Employees</label><input className="input-field" type="number" value={formData.BusinessDetails?.employees} onChange={(e) => setFormData({...formData, BusinessDetails: {...formData.BusinessDetails, employees: e.target.value}})} /></div>
                   <div className="space-y-2"><label className="text-xs font-bold text-slate-500 uppercase ml-1">Monthly Income (Rs.)</label><input className="input-field" type="number" value={formData.Financials?.monthlyIncome} onChange={(e) => setFormData({...formData, Financials: {...formData.Financials, monthlyIncome: e.target.value}})} /></div>
                   <div className="space-y-2"><label className="text-xs font-bold text-slate-500 uppercase ml-1">Monthly Sales (Rs.)</label><input className="input-field" type="number" value={formData.Financials?.monthlySales} onChange={(e) => setFormData({...formData, Financials: {...formData.Financials, monthlySales: e.target.value}})} /></div>
